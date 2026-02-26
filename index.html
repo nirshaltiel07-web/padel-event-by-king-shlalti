@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>טורניר הפאדל של החברים! 🎾</title>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Heebo', sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+            text-align: right;
+        }
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+        }
+        h2 {
+            font-size: 2em;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        .countdown {
+            text-align: center;
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #e74c3c;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #fce4e4;
+            border-radius: 8px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .countdown span {
+            display: block;
+            font-size: 0.5em;
+            color: #555;
+            margin-top: 5px;
+        }
+        .details {
+            background-color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .details p {
+            margin: 5px 0;
+            font-size: 1.1em;
+        }
+        .teams-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .team-card {
+            background-color: #fdfdfd;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        .team-card img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 4px solid #3498db;
+        }
+        .team-card h3 {
+            color: #34495e;
+            font-size: 1.6em;
+            margin-bottom: 10px;
+        }
+        .team-card p {
+            font-size: 1em;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .prediction-section {
+            background-color: #e8f8f5;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 50px;
+            text-align: center;
+        }
+        .prediction-section h2 {
+            color: #16a085;
+            border-color: #a3d9cb;
+        }
+        .prediction-section select {
+            width: 70%;
+            padding: 12px;
+            margin: 20px auto;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1.1em;
+            display: block;
+            text-align: right; /* עבור RTL */
+            direction: rtl; /* עבור RTL */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23333%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13.2-5.4H18.2c-4.1%200-7.9%201.5-10.9%204.6-3.1%203-4.6%206.8-4.6%2010.9%200%204.1%201.5%207.9%204.6%2010.9l128.8%20128.8c3.1%203.1%206.8%204.6%2010.9%204.6s7.9-1.5%2010.9-4.6l128.8-128.8c3.1-3.1%204.6-6.8%204.6-10.9s-1.5-7.9-4.6-10.9z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: left 15px center; /* שינוי ל-left עבור RTL */
+            background-size: 12px;
+            padding-right: 40px; /* הוספה עבור RTL */
+            padding-left: 12px; /* שינוי עבור RTL */
+        }
+        .prediction-section select:focus {
+            outline: none;
+            border-color: #16a085;
+            box-shadow: 0 0 0 3px rgba(22, 160, 133, 0.2);
+        }
+        .prediction-message {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #27ae60;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2.2em;
+            }
+            h2 {
+                font-size: 1.7em;
+            }
+            .countdown {
+                font-size: 2em;
+                padding: 15px;
+            }
+            .details p {
+                font-size: 1em;
+            }
+            .teams-grid {
+                grid-template-columns: 1fr;
+            }
+            .team-card img {
+                width: 120px;
+                height: 120px;
+            }
+            .team-card h3 {
+                font-size: 1.4em;
+            }
+            .prediction-section select {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>טורניר הפאדל הגדול! 🎾</h1>
+        <p style="text-align: center; font-size: 1.2em; color: #555;">החברים מתכוננים לטורניר פאדל בלתי נשכח! מי ירים את הגביע?</p>
+
+        <h2>הספירה לאחור מתחילה...</h2>
+        <div class="countdown" id="countdown">
+            <span id="days">00</span> ימים |
+            <span id="hours">00</span> שעות |
+            <span id="minutes">00</span> דקות |
+            <span id="seconds">00</span> שניות
+            <span>עד שהכדורים יתחילו לעוף!</span>
+        </div>
+
+        <div class="details">
+            <h2>פרטי הטורניר</h2>
+            <p><strong>מיקום:</strong> קאנטרי דקל תל אביב</p>
+            <p><strong>תאריך:</strong> יום שבת הקרוב</p>
+            <p><strong>שעה:</strong> 12:00 - 14:00</p>
+        </div>
+
+        <h2>הזוגות המשתתפים:</h2>
+        <div class="teams-grid">
+            <div class="team-card">
+                <img src="https://via.placeholder.com/150/FF6347/FFFFFF?text=ניר%2Bדניאל" alt="ניר ודניאל">
+                <h3>ניר ודניאל</h3>
+                <p>הזוג המרענן של שבת, באים לרענן את המגרש ולנצח בכל מחיר!</p>
+            </div>
+
+            <div class="team-card">
+                <img src="https://via.placeholder.com/150/20B2AA/FFFFFF?text=סם%2Bעמית" alt="סם ועמית">
+                <h3>סם ועמית</h3>
+                <p>הזוג היציב של שבת, המון שחצנות והמון אמונה לשבת הקרובה.</p>
+            </div>
+
+            <div class="team-card">
+                <img src="https://via.placeholder.com/150/FFD700/000000?text=נחום%2Bבן" alt="נחום ובן">
+                <h3>נחום ובן</h3>
+                <p>האם בן יסחוב את נחום כמו שאפי הצליח? או שמה נחום יסחוב את בן?</p>
+            </div>
+
+            <div class="team-card">
+                <img src="https://via.placeholder.com/150/8A2BE2/FFFFFF?text=עידו%2Bיוגב" alt="עידו ויוגב">
+                <h3>עידו ויוגב</h3>
+                <p>אם לא עכשיו אז מתי?? יוגב שנבחר לשחקן מוביל מאכזב מאוד בשבועות האחרונים.</p>
+            </div>
+
+            <div class="team-card">
+                <img src="https://via.placeholder.com/150/32CD32/FFFFFF?text=אורחי%2Bשלם" alt="אורחי ושלם">
+                <h3>אורחי ושלם</h3>
+                <p>אין ציפיה אז גם אין לחץ? האם חוסר האמונה בזוג הזה הוא שיביא להם אליפות?</p>
+            </div>
+        </div>
+
+        <div class="prediction-section">
+            <h2>מי לדעתך יקח את האליפות?</h2>
+            <select id="winnerPrediction">
+                <option value="">בחר את הזוג המנצח...</option>
+                <option value="ניר ודניאל">ניר ודניאל</option>
+                <option value="סם ועמית">סם ועמית</option>
+                <option value="נחום ובן">נחום ובן</option>
+                <option value="עידו ויוגב">עידו ויוגב</option>
+                <option value="אורחי ושלם">אורחי ושלם</option>
+            </select>
+            <p class="prediction-message" id="predictionMessage"></p>
+        </div>
+    </div>
+
+    <script>
+        // Set the date we're counting down to
+        // שנה, חודש (0-11), יום, שעה, דקה, שניה
+        // ודא שזה שבת הקרובה בשעה 12:00. אם אנחנו היום ראשון ה-21, ושבת הבאה היא ה-27, אז נגדיר ל-27.
+        // צריך לבדוק את התאריך המדויק. נניח שזה 27/07/2024 בשעה 12:00
+        const countdownDate = new Date("Jul 27, 2024 12:00:00").getTime(); // יש לשנות את התאריך לשבת הקרובה
+
+        // Update the countdown every 1 second
+        const x = setInterval(function() {
+
+            // Get today's date and time
+            const now = new Date().getTime();
+
+            // Find the distance between now and the countdown date
+            const distance = countdownDate - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display the result in the element with id="countdown"
+            document.getElementById("days").innerHTML = days < 10 ? "0" + days : days;
+            document.getElementById("hours").innerHTML = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerHTML = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerHTML = seconds < 10 ? "0" + seconds : seconds;
+
+            // If the countdown is over, write some text
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("countdown").innerHTML = "הטורניר התחיל! שיהיה בהצלחה לכולם! 🏆";
+                document.getElementById("countdown").style.fontSize = "1.5em";
+                document.getElementById("countdown").style.color = "#28a745";
+                document.getElementById("countdown").style.backgroundColor = "#d4edda";
+            }
+        }, 1000);
+
+        // Handle prediction selection
+        document.getElementById("winnerPrediction").addEventListener("change", function() {
+            const selectedTeam = this.value;
+            const messageElement = document.getElementById("predictionMessage");
+            if (selectedTeam) {
+                messageElement.innerHTML = `ההימור שלך: ${selectedTeam} ייקחו את האליפות!`;
+            } else {
+                messageElement.innerHTML = "";
+            }
+        });
+    </script>
+</body>
+</html>
